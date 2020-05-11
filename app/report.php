@@ -10,7 +10,7 @@ class report extends Model
   public function apikey()
   {
     $result = array(
-      "dropbox" => "xjqKpNY_c1AAAAAAAAAHQ_eaGFO2Gz5blN1hIaeeHeSLGNICWN8vZN0lcKksXlS0",
+      "dropbox" => "xjqKpNY_c1AAAAAAAAAHRHHMKntdkLcK4miq6t2zl9t1EDkZ4XhQb_HUx86nkvsK",
     );
     return $result;
   }
@@ -20,14 +20,39 @@ class report extends Model
     $report_object = new report;
     $path = "/1";
 
-
-
-    $result = $report_object->test_helper_2($path, array(), array());
+    $result = $report_object->test_helper_2($path, "", $report_object);
 
     return $result;
   }
 
-  public function test_helper_1($path)
+  public function test_helper_2($path, $called, $report_object)
+  {
+    $result = $report_object->get_from_dropbox($path, $report_object, "files/list_folder");
+    if (isset($result["entries"])) {
+      $result = $result["entries"];
+
+      $called = "";
+
+      if (isset($result)) {
+        foreach ($result as $key => $entry) {
+          if ($entry['.tag'] == "folder") {
+            $result[$key]["child_content"] = $report_object->test_helper_2($entry['path_display'], $called, $report_object);
+          } else {
+            // code...
+            $file_content = $report_object->stream_from_dropbox($path, $report_object);
+            $result[$key]["child_content"] = $file_content;
+          }
+        }
+      }
+    }
+
+
+    return $result;
+  }
+
+
+
+  public function get_from_dropbox($path, $report_object, $url_suffix)
   {
     $report_object = new report;
     $body = array(
@@ -36,7 +61,6 @@ class report extends Model
     $body = json_encode($body);
 
     // $url_suffix = "files/get_metadata";
-    $url_suffix = "files/list_folder";
 
     $apikey = $report_object->apikey()["dropbox"];
     $endpoint = 'https://api.dropboxapi.com/2/'.$url_suffix;
@@ -48,43 +72,50 @@ class report extends Model
     return $result;
   }
 
-  public function test_helper_2($path, $datas=array(), $called=array())
+  public function stream_from_dropbox($path, $report_object)
   {
-    $report_object = new report;
-    $response = $report_object->test_helper_1($path);
+    $apikey = $report_object->apikey()["dropbox"];
 
-    $called[] = $path;
-    $result = array();
+    $text = array(
+      "path"=> $path,
+      "recursive"=> false,
+      "include_media_info"=> false,
+      "include_deleted"=> false,
+      "include_has_explicit_shared_members"=> false,
+      "include_mounted_folders"=> true
+    );
+    $text = json_encode($text);
 
-    foreach ($response['entries'] as $entry)
-    {
+    // echo $text . '<br>' ;
 
-      if ($entry['.tag'] == "folder")
-      {
-        if (!isset($result[$entry['path_display']]))
-        {
-          $result[$entry['path_display']] = $entry['path_display'];
-          foreach ($result as $key => $data)
-          {
-            if (in_array($key, $called))
-            {
-              continue;
-            }
-            else
-            {
-              $report_object->test_helper_2($key, $result, $called);
-            }
-          }
-        }
-      } else {
-        // code...
-      }
-    }
+    $postdata = http_build_query(
+      array(
+        'data' => $text
+      )
+    );
 
+    $opts = array(
+      'http' => array(
+        'method'  => 'POST',
+        'header'  => array('Authorization: Bearer ' . $apikey,
+        'Content-Type: application/json'),
+        'content' => $postdata
+      ),
+      'ssl' => array(
+        "verify_peer"=>false,
+        "verify_peer_name"=>false
+      )
+    );
+
+    $context  = stream_context_create($opts);
+
+    $endpoint = 'https://api.dropboxapi.com/2/files/download';
+
+    $result = file_get_contents($endpoint, false, $context);
 
     return $result;
-  }
 
+  }
 
   public function curl_post($body,$endpoint,$apikey)
   {

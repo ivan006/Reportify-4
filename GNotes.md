@@ -87,3 +87,24 @@ https://stackoverflow.com/questions/39724700/dropbox-api-v2-and-v1-list-folder-w
 google: dropbox api php recursive stack
 https://stackoverflow.com/questions/24947785/listing-entire-folder-subfolder-structure-of-dropbox-account-dropbox-api
 https://stackoverflow.com/questions/24947785/listing-entire-folder-subfolder-structure-of-dropbox-account-dropbox-api/24947977#24947977
+https://dropbox.github.io/dropbox-api-v2-explorer/#files_list_folder
+https://www.dropbox.com/developers/documentation/http/documentation#files-list_folder
+https://www.dropboxforum.com/t5/Dropbox-API-Support-Feedback/Retrieve-all-files-in-App-shared-folder-respecting-folder-tree/td-p/345215
+google: dropbox api get txt file content
+https://stackoverflow.com/questions/47130844/how-do-i-get-a-text-files-content-with-swift-and-the-dropbox-api
+https://www.dropboxforum.com/t5/Dropbox-API-Support-Feedback/How-to-display-text-file-content-saved-on-account/td-p/166746
+https://www.youtube.com/watch?v=2puV9yXHiAA&t=338s
+google: file_get_content dropbox api
+google; fopen dropbox api
+https://stackoverflow.com/questions/17275213/streaming-file-from-dropbox-to-a-users-browser
+https://www.dropboxforum.com/t5/Dropbox-API-Support-Feedback/Dropbox-nested-files-download-using-CURL/td-p/244985
+https://www.dropboxforum.com/t5/Dropbox-API-Support-Feedback/PHP-file-download-returns-page-not-found/m-p/264177#M15462
+https://www.dropboxforum.com/t5/Dropbox-API-Support-Feedback/error-using-PHP-file-get-contents-to-call-list-folder-api/m-p/264162
+google: curl generator
+https://curlbuilder.com/
+google: curl to php convertor
+https://incarnate.github.io/curl-to-php/
+google: curl_setopt array
+https://www.php.net/manual/en/function.curl-setopt-array.php
+https://www.php.net/manual/en/function.curl-setopt-array.php#89850
+google: dropbox createTemporaryDirectLink
