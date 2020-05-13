@@ -205,29 +205,6 @@ https://laravel.com/docs/7.x/csrf#csrf-excluding-uris
 google: Excluding URIs From CSRF Protection stack
 https://www.youtube.com/watch?v=nGXo061pibU&t=890s
 ---
-
-Error: Received unexpected status code 500.
-
-Request:
-POST https://bluegemify.co.za/webhook_endpoint
-
-Response:
-HTTP/1.1 500 Internal Server Error
-Upgrade: h2,h2c
-Transfer-Encoding: chunked
-Set-Cookie: XSRF-TOKEN=eyJpdiI6ImQxeW9TSDBOR2RnTXArZ1REUVpaZlE9PSIsInZhbHVlIjoiZjRUVGdiUnN5bU9OT09wd3Y4V0JVWUJvU2pkQVViNzBSOGpwUng5ZGZuMXo4YXp3NHFWc05UZ055Q2xUREloNiIsIm1hYyI6IjdlNDc4YTRhNzcwOGU2YTYxM2FhZmE5ZWQwM2M4NDgyMzBkMGYxNWUwYTdkOTQ4MTg2MDA3YmFmODNiNjkxMzUifQ%3D%3D; expires=Wed, 13-May-2020 17:08:55 GMT; Max-Age=7200; path=/; samesite=lax
-Set-Cookie: laravel_session=eyJpdiI6IjQrQVVhck4xTmlCa1FUOWdpcy9aNFE9PSIsInZhbHVlIjoiK3h5alJ1cGtzZGRYSHJvd3hLOFgzckp6cjVqUDJOYVZCY2V5bWhsOG1UOFViZ1ozOExSK0NzWjRvRUJJYmdmWiIsIm1hYyI6ImVmNjQ5OTFlNzk0YzY0ZDg4OWM1ODk2ZDliODU4NjE2ZGY2ZGU5ZTQwNTliMzFmZWNiOTkwM2I4YmYyMmUxODcifQ%3D%3D; expires=Wed, 13-May-2020 17:08:55 GMT; Max-Age=7200; path=/; httponly; samesite=lax
-X-Http-Reason: Internal Server Error
-Server: Apache
-Connection: Upgrade, close
-Cache-Control: no-cache, private
-Date: Wed, 13 May 2020 15:08:55 GMT
-Content-Type: text/html; charset=UTF-8
-
-Response Body (First 256 bytes):
-<!doctype html>
-<html class="theme-light">
-<!--
-ErrorException: Illegal string offset 'X-Dropbox-Signature' in file /usr/home/bluegpyuty/FlexFile-3/app/report.php on line 220
-
-#0 /usr/home/bluegpyuty/FlexFile-3/app/report.php(220): Illuminate\Foundation\Bo
+https://stackoverflow.com/questions/11549742/php-checking-if-timestamp-is-less-than-30-minutes-old
+google: files/list_folder with key and secret
+https://stackoverflow.com/questions/41280591/http-request-for-auth-in-dropbox-using-qt5

@@ -10,7 +10,7 @@ class report extends Model
   public function apikey()
   {
     $result = array(
-      "dropbox_token" => "xjqKpNY_c1AAAAAAAAAHR6868i7CtjCKxbEtfFLeH1BMLw7CrY109NtI_cFihj_U",
+      "dropbox_token" => "xjqKpNY_c1AAAAAAAAAHVrAmTtVgA1n8aPH1kbh8vEWWi3AFktgbOzzv0huONAZh",
       "dropbox_userpwd" => array(
         "username" => "z3o9nmtmd0ikqf4",
         "password" => "ntibchtud5z4lmr",
@@ -19,19 +19,21 @@ class report extends Model
     return $result;
   }
 
-  public function test()
+  public function dropbox_files_recursive()
   {
     $report_object = new report;
-    $path = "/1";
+    $path = "";
 
-    $result = $report_object->test_helper_2($path, "", $report_object);
+    $result = $report_object->dropbox_files_recursive_helper($path, "", $report_object);
+
 
     return $result;
   }
 
-  public function test_helper_2($path, $called, $report_object)
+  public function dropbox_files_recursive_helper($path, $called, $report_object)
   {
     $result = $report_object->get_from_dropbox($path, $report_object, "files/list_folder");
+    $result_2 = array();
 
     if (isset($result["entries"])) {
       $result = $result["entries"];
@@ -40,17 +42,25 @@ class report extends Model
 
       if (isset($result)) {
         foreach ($result as $key => $entry) {
+
           if ($entry['.tag'] == "folder") {
-            $result[$key]["child_content"] = $report_object->test_helper_2($entry['path_display'], $called, $report_object);
+            $sub_result_sum = $report_object->dropbox_files_recursive_helper($entry['path_display'], $called, $report_object);
+            $result[$key]["child_content"] = $sub_result_sum["all_nested"];
           } else {
+            if (strtotime($entry["server_modified"]) > strtotime("-1 minutes")) {
+              $result_2[] = $entry;
+            }
             $result[$key]["child_content"] = "";
             // $result[$key]["child_content"] = $report_object->file_contents($entry['path_display'], $report_object);
           }
         }
       }
     }
-
-    return $result;
+    $result_sum = array(
+      "all_nested" => $result,
+      "uncached" => $result_2,
+    );
+    return $result_sum;
   }
 
   public function file_contents($path, $report_object)
@@ -164,32 +174,39 @@ class report extends Model
 
   }
 
-  public function webhook_endpoint()
+  public function update_cache()
   {
     $report_object = new report;
-    $result = "";
-    $file_content_prefix = "";
 
     if (isset($_GET['challenge'])) {
       $result = $_GET['challenge'];
       // echo 123;
-      $file_content_prefix = "Challange";
-    } elseif ($report_object->webhook_endpoint_authenticate() == 1) {
-      $file_content_prefix = "Authenticated";
+      $report_object->log_timestamp("Challange");
+      return $result;
+
+    } elseif ($report_object->authenticate() == 1) {
+      $uncached = array_column($dropbox_files_recursive["uncached"], "path_lower");
+      $uncached = json_encode($uncached,JSON_PRETTY_PRINT);
+      $report_object->log_timestamp("Authenticated".$uncached);
+
     } else {
       header('HTTP/1.0 403 Forbidden');
-      $file_content_prefix = "Not authenticated";
+      $report_object->log_timestamp("Not authenticated");
     }
 
-    $timestamp = date('Y-m-d h:i:s a', time());
-    $file_content =  $file_content_prefix." ".$timestamp;
-    $file_name = "GTest.txt";
-    file_put_contents($file_name, $file_content);
 
-    return $result;
+
   }
 
-  public function webhook_endpoint_authenticate()
+  public function log_timestamp($input_string)
+  {
+    $timestamp = date('Y-m-d h:i:s a', time());
+    $file_content =  $input_string." ".$timestamp;
+    $file_name = "GTest.txt";
+    file_put_contents($file_name, $file_content);
+  }
+
+  public function authenticate()
   {
     $result = 0;
     $report_object = new report;
@@ -203,7 +220,7 @@ class report extends Model
       $json = json_decode($raw_data);
       if (is_object($json)) {
         if (isset($json->list_folder)) {
-          $headers = $report_object->webhook_endpoint_getallheaders();
+          $headers = $report_object->getallheaders();
           if (hash_hmac("sha256", $raw_data, $userpwd['password']) == $headers['X-Dropbox-Signature']) {
             $result = 1;
           }
@@ -213,11 +230,19 @@ class report extends Model
     return $result;
   }
 
-  function webhook_endpoint_getallheaders()  {
-    $headers = '';
+  function getallheaders()  {
+    $headers = array();
     foreach ($_SERVER as $name => $value)  {
       if (substr($name, 0, 5) == 'HTTP_') {
-        $headers[str_replace(' ', '-', ucwords(strtolower(str_replace('_', ' ', substr($name, 5)))))] = $value;
+
+        $name = substr($name, 5);
+        $name = str_replace('_', ' ', $name);
+        $name = strtolower($name);
+        $name = ucwords($name);
+        $name = str_replace(' ', '-', $name);
+
+        $headers[$name] = $value;
+
       }
     }
     return $headers;

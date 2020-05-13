@@ -17,5 +17,5 @@ use Illuminate\Support\Facades\Route;
 //     return view('welcome');
 // });
 
-Route::get('/', "report_c@test");
-Route::any('/webhook_endpoint', "report_c@webhook_endpoint");
+Route::get('/dropbox', "report_c@dropbox_files_recursive");
+Route::any('/update_cache', "report_c@update_cache");
