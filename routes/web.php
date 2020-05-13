@@ -16,4 +16,6 @@ use Illuminate\Support\Facades\Route;
 // Route::get('/', function () {
 //     return view('welcome');
 // });
+
 Route::get('/', "report_c@test");
+Route::get('/webhook_endpoint', "report_c@webhook_endpoint");

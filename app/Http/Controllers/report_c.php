@@ -23,4 +23,13 @@ class report_c extends Controller
       return view('welcome', compact("var1", "var2"));
     }
 
+    public function webhook_endpoint()
+    {
+      $report_object = new report;
+      $var1 = 1;
+      $var2 = $report_object->webhook_endpoint();
+      // $var2 = json_encode($var2, JSON_PRETTY_PRINT);
+      return $var2;
+    }
+
 }

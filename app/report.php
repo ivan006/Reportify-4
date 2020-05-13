@@ -10,7 +10,7 @@ class report extends Model
   public function apikey()
   {
     $result = array(
-      "dropbox_token" => "xjqKpNY_c1AAAAAAAAAHRkV9lpYRck_y4Y-UmX9HVs8z5VKnfTyQyE_2ytaa5zo9",
+      "dropbox_token" => "xjqKpNY_c1AAAAAAAAAHR6868i7CtjCKxbEtfFLeH1BMLw7CrY109NtI_cFihj_U",
       "dropbox_userpwd" => array(
         "username" => "z3o9nmtmd0ikqf4",
         "password" => "ntibchtud5z4lmr",
@@ -43,6 +43,7 @@ class report extends Model
           if ($entry['.tag'] == "folder") {
             $result[$key]["child_content"] = $report_object->test_helper_2($entry['path_display'], $called, $report_object);
           } else {
+            $result[$key]["child_content"] = "";
             // $result[$key]["child_content"] = $report_object->file_contents($entry['path_display'], $report_object);
           }
         }
@@ -163,40 +164,51 @@ class report extends Model
 
   }
 
-  public function handle()
+  public function webhook_endpoint_verify()
   {
-    global $container;
 
-    header('Content-Type: text/plain');
 
-    // Check get parameter
-    // Necessary for enabling the webhook via dropbox' app console
-    if (($challenge = \Input::get('challenge'))) {
-      die($challenge);
-    }
+    $report_object = new report;
 
-    $rawData   = file_get_contents('php://input');
-    $json      = json_decode($rawData);
-    $appSecret = $container['dropbox.appSecret'];
 
-    // Check the signature for a valid request
-    if ($_SERVER['HTTP_X_DROPBOX_SIGNATURE'] !== hash_hmac('sha256', $rawData, $appSecret)) {
+    $userpwd = "";
+    $userpwd = $report_object->apikey()["dropbox_userpwd"];
+    // $token = "";
+    // $token = $report_object->apikey()["dropbox_token"];
+
+    if (isset($_GET['challenge'])) {
+      echo $_GET['challenge'];
+    } else {
+      $raw_data = file_get_contents('php://input');
+      if ($raw_data) {
+        $json = json_decode($raw_data);
+        if (is_object($json)) {
+          if (isset($json->list_folder)) {
+            $headers = getallheaders();
+            if (hash_hmac($userpwd['username'],$raw_data,$userpwd['password']) == $headers['X-Dropbox-Signature']) {
+              // Do something
+
+
+              exit();
+            }
+          }
+        }
+      }
       header('HTTP/1.0 403 Forbidden');
-      die('Invalid request');
     }
 
-    // Return a response to the client before processing
-    // Dropbox wants a response quickly
-    header('Connection: close');
-    ob_start();
-    header('HTTP/1.0 200 OK');
-    ob_end_flush();
-    flush();
 
-    // Do all the stuff you want to
+    if (!function_exists('getallheaders')) {
+      function getallheaders()  {
+        $headers = '';
+        foreach ($_SERVER as $name => $value)  {
+          if (substr($name, 0, 5) == 'HTTP_') {
+            $headers[str_replace(' ', '-', ucwords(strtolower(str_replace('_', ' ', substr($name, 5)))))] = $value;
+          }
+        }
+        return $headers;
+      }
+    }
+
   }
-
-
-
-
 }
