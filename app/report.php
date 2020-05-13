@@ -164,51 +164,65 @@ class report extends Model
 
   }
 
-  public function webhook_endpoint_verify()
+  public function webhook_endpoint()
   {
-
-
     $report_object = new report;
+    $result = "";
+    $file_content_prefix = "";
 
+    if (isset($_GET['challenge'])) {
+      $result = $_GET['challenge'];
+      // echo 123;
+      $file_content_prefix = "Challange";
+    } elseif ($report_object->webhook_endpoint_authenticate() == 1) {
+      $file_content_prefix = "Authenticated";
+    } else {
+      header('HTTP/1.0 403 Forbidden');
+      $file_content_prefix = "Not authenticated";
+    }
 
+    $timestamp = date('Y-m-d h:i:s a', time());
+    $file_content =  $file_content_prefix." ".$timestamp;
+    $file_name = "GTest.txt";
+    file_put_contents($file_name, $file_content);
+
+    return $result;
+  }
+
+  public function webhook_endpoint_authenticate()
+  {
+    $result = 0;
+    $report_object = new report;
     $userpwd = "";
     $userpwd = $report_object->apikey()["dropbox_userpwd"];
     // $token = "";
     // $token = $report_object->apikey()["dropbox_token"];
 
-    if (isset($_GET['challenge'])) {
-      echo $_GET['challenge'];
-    } else {
-      $raw_data = file_get_contents('php://input');
-      if ($raw_data) {
-        $json = json_decode($raw_data);
-        if (is_object($json)) {
-          if (isset($json->list_folder)) {
-            $headers = getallheaders();
-            if (hash_hmac($userpwd['username'],$raw_data,$userpwd['password']) == $headers['X-Dropbox-Signature']) {
-              // Do something
-
-
-              exit();
-            }
+    $raw_data = file_get_contents('php://input');
+    if ($raw_data) {
+      $json = json_decode($raw_data);
+      if (is_object($json)) {
+        if (isset($json->list_folder)) {
+          $headers = $report_object->webhook_endpoint_getallheaders();
+          if (hash_hmac("sha256", $raw_data, $userpwd['password']) == $headers['X-Dropbox-Signature']) {
+            $result = 1;
           }
         }
       }
-      header('HTTP/1.0 403 Forbidden');
     }
-
-
-    if (!function_exists('getallheaders')) {
-      function getallheaders()  {
-        $headers = '';
-        foreach ($_SERVER as $name => $value)  {
-          if (substr($name, 0, 5) == 'HTTP_') {
-            $headers[str_replace(' ', '-', ucwords(strtolower(str_replace('_', ' ', substr($name, 5)))))] = $value;
-          }
-        }
-        return $headers;
-      }
-    }
-
+    return $result;
   }
+
+  function webhook_endpoint_getallheaders()  {
+    $headers = '';
+    foreach ($_SERVER as $name => $value)  {
+      if (substr($name, 0, 5) == 'HTTP_') {
+        $headers[str_replace(' ', '-', ucwords(strtolower(str_replace('_', ' ', substr($name, 5)))))] = $value;
+      }
+    }
+    return $headers;
+  }
+
+
+
 }

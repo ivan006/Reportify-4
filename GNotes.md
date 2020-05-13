@@ -186,3 +186,13 @@ google: dropbox webhooks php
 https://www.dropboxforum.com/t5/Dropbox-API-Support-Feedback/Webhooks-in-PHP/td-p/4274
 https://www.dropbox.com/developers/reference/webhooks
 google: dropbox webhooks php
+---useful start
+https://gist.github.com/Foxy79/cc4aceb1a71e9cc60f87
+---useful end
+https://gist.github.com/richardhj/3a111f1e64f1db29d9a34f07c68db5e4
+google: dropbox isn't sending webhooks
+https://www.dropboxforum.com/t5/Dropbox-API-Support-Feedback/webhook-not-work/td-p/254264
+---useful start
+https://www.dropboxforum.com/t5/Dropbox-API-Support-Feedback/dropbox-isn-t-sending-webhooks/td-p/419730
+---useful end
+https://www.dropboxforum.com/t5/Dropbox-API-Support-Feedback/Webhook-Notifications-Not-Being-Recieved/td-p/233804

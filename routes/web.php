@@ -18,4 +18,4 @@ use Illuminate\Support\Facades\Route;
 // });
 
 Route::get('/', "report_c@test");
-Route::get('/webhook_endpoint', "report_c@webhook_endpoint");
+Route::any('/webhook_endpoint', "report_c@webhook_endpoint");
