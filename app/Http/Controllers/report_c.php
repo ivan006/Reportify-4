@@ -29,6 +29,11 @@ class report_c extends Controller
       $var2 = $dropbox_files_recursive["uncached"];
       $var2 = json_encode($var2, JSON_PRETTY_PRINT);
 
+
+      $uncached = array_column($dropbox_files_recursive["uncached"], "path_lower");
+      $var2 = json_encode($uncached,JSON_PRETTY_PRINT);
+
+
       return view('welcome', compact("var1", "var2"));
     }
 

@@ -10,7 +10,7 @@ class report extends Model
   public function apikey()
   {
     $result = array(
-      "dropbox_token" => "xjqKpNY_c1AAAAAAAAAHVrAmTtVgA1n8aPH1kbh8vEWWi3AFktgbOzzv0huONAZh",
+      "dropbox_token" => "xjqKpNY_c1AAAAAAAAAHV333ZDoip23UiMuNIdHL4vLhaz6uYj6oJLNbOWXC81ZA",
       "dropbox_userpwd" => array(
         "username" => "z3o9nmtmd0ikqf4",
         "password" => "ntibchtud5z4lmr",
@@ -185,6 +185,8 @@ class report extends Model
       return $result;
 
     } elseif ($report_object->authenticate() == 1) {
+
+      $dropbox_files_recursive = $report_object->dropbox_files_recursive();
       $uncached = array_column($dropbox_files_recursive["uncached"], "path_lower");
       $uncached = json_encode($uncached,JSON_PRETTY_PRINT);
       $report_object->log_timestamp("Authenticated".$uncached);
