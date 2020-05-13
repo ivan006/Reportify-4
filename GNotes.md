@@ -196,3 +196,38 @@ https://www.dropboxforum.com/t5/Dropbox-API-Support-Feedback/webhook-not-work/td
 https://www.dropboxforum.com/t5/Dropbox-API-Support-Feedback/dropbox-isn-t-sending-webhooks/td-p/419730
 ---useful end
 https://www.dropboxforum.com/t5/Dropbox-API-Support-Feedback/Webhook-Notifications-Not-Being-Recieved/td-p/233804
+https://www.dropboxforum.com/t5/Dropbox-API-Support-Feedback/Not-receiving-notifications-on-webhook/td-p/290637
+https://zapier.com/app/editor/87225368/nodes/87225371
+https://webhook.site/#!/08c53f4b-48b3-4a1e-86eb-4c65a70d886e/6f5253de-762a-424a-a7cc-b3a1ceb5089c/1
+google: status code 419 laravel dropbox CSRF
+https://stackoverflow.com/questions/46266553/why-does-the-laravel-api-return-a-419-status-code-on-post-and-put-methods
+https://laravel.com/docs/7.x/csrf#csrf-excluding-uris
+google: Excluding URIs From CSRF Protection stack
+https://www.youtube.com/watch?v=nGXo061pibU&t=890s
+---
+
+Error: Received unexpected status code 500.
+
+Request:
+POST https://bluegemify.co.za/webhook_endpoint
+
+Response:
+HTTP/1.1 500 Internal Server Error
+Upgrade: h2,h2c
+Transfer-Encoding: chunked
+Set-Cookie: XSRF-TOKEN=eyJpdiI6ImQxeW9TSDBOR2RnTXArZ1REUVpaZlE9PSIsInZhbHVlIjoiZjRUVGdiUnN5bU9OT09wd3Y4V0JVWUJvU2pkQVViNzBSOGpwUng5ZGZuMXo4YXp3NHFWc05UZ055Q2xUREloNiIsIm1hYyI6IjdlNDc4YTRhNzcwOGU2YTYxM2FhZmE5ZWQwM2M4NDgyMzBkMGYxNWUwYTdkOTQ4MTg2MDA3YmFmODNiNjkxMzUifQ%3D%3D; expires=Wed, 13-May-2020 17:08:55 GMT; Max-Age=7200; path=/; samesite=lax
+Set-Cookie: laravel_session=eyJpdiI6IjQrQVVhck4xTmlCa1FUOWdpcy9aNFE9PSIsInZhbHVlIjoiK3h5alJ1cGtzZGRYSHJvd3hLOFgzckp6cjVqUDJOYVZCY2V5bWhsOG1UOFViZ1ozOExSK0NzWjRvRUJJYmdmWiIsIm1hYyI6ImVmNjQ5OTFlNzk0YzY0ZDg4OWM1ODk2ZDliODU4NjE2ZGY2ZGU5ZTQwNTliMzFmZWNiOTkwM2I4YmYyMmUxODcifQ%3D%3D; expires=Wed, 13-May-2020 17:08:55 GMT; Max-Age=7200; path=/; httponly; samesite=lax
+X-Http-Reason: Internal Server Error
+Server: Apache
+Connection: Upgrade, close
+Cache-Control: no-cache, private
+Date: Wed, 13 May 2020 15:08:55 GMT
+Content-Type: text/html; charset=UTF-8
+
+Response Body (First 256 bytes):
+<!doctype html>
+<html class="theme-light">
+<!--
+ErrorException: Illegal string offset 'X-Dropbox-Signature' in file /usr/home/bluegpyuty/FlexFile-3/app/report.php on line 220
+
+#0 /usr/home/bluegpyuty/FlexFile-3/app/report.php(220): Illuminate\Foundation\Bo
