@@ -7,10 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 class report extends Model
 {
 
-  public function apikey()
-  {
+  public function apikey(){
     $result = array(
-      "dropbox_token" => "xjqKpNY_c1AAAAAAAAAHV333ZDoip23UiMuNIdHL4vLhaz6uYj6oJLNbOWXC81ZA",
+      "dropbox_token" => "xjqKpNY_c1AAAAAAAAAHWibFEy2yVrNVjkY4QhcBBfhX08p5Y6EnBL51VAFwuTM3",
       "dropbox_userpwd" => array(
         "username" => "z3o9nmtmd0ikqf4",
         "password" => "ntibchtud5z4lmr",
@@ -19,21 +18,19 @@ class report extends Model
     return $result;
   }
 
-  public function dropbox_files_recursive()
-  {
+  public function state_raw(){
     $report_object = new report;
     $path = "";
 
-    $result = $report_object->dropbox_files_recursive_helper($path, "", $report_object);
+    $result = $report_object->state_raw_helper($path, "", $report_object);
 
 
     return $result;
   }
 
-  public function dropbox_files_recursive_helper($path, $called, $report_object)
-  {
+  public function state_raw_helper($path, $called, $report_object){
     $result = $report_object->get_from_dropbox($path, $report_object, "files/list_folder");
-    $result_2 = array();
+
 
     if (isset($result["entries"])) {
       $result = $result["entries"];
@@ -44,27 +41,18 @@ class report extends Model
         foreach ($result as $key => $entry) {
 
           if ($entry['.tag'] == "folder") {
-            $sub_result_sum = $report_object->dropbox_files_recursive_helper($entry['path_display'], $called, $report_object);
-            $result[$key]["child_content"] = $sub_result_sum["all_nested"];
+            $sub_result = $report_object->state_raw_helper($entry['path_display'], $called, $report_object);
+            $result[$key]["child_content"] = $sub_result;
           } else {
-            if (strtotime($entry["server_modified"]) > strtotime("-1 minutes")) {
-              $result_2[] = $entry;
-            }
             $result[$key]["child_content"] = "";
-            // $result[$key]["child_content"] = $report_object->file_contents($entry['path_display'], $report_object);
           }
         }
       }
     }
-    $result_sum = array(
-      "all_nested" => $result,
-      "uncached" => $result_2,
-    );
-    return $result_sum;
+    return $result;
   }
 
-  public function file_contents($path, $report_object)
-  {
+  public function file_contents($path, $report_object){
     $file_content = $report_object->get_from_dropbox($path, $report_object, "files/get_temporary_link");
     if (isset($file_content["link"])){
       $file_content = $file_content["link"];
@@ -77,8 +65,7 @@ class report extends Model
     return $result;
   }
 
-  public function get_from_dropbox($path, $report_object, $url_suffix)
-  {
+  public function get_from_dropbox($path, $report_object, $url_suffix){
     $report_object = new report;
     $body = array(
       "path" => $path,
@@ -102,8 +89,7 @@ class report extends Model
     return $result;
   }
 
-  public function curl_post($body, $endpoint, $userpwd, $token)
-  {
+  public function curl_post($body, $endpoint, $userpwd, $token){
 
     $ch = curl_init();
 
@@ -144,8 +130,7 @@ class report extends Model
 
   }
 
-  public function curl_get($endpoint,$userpwd)
-  {
+  public function curl_get($endpoint,$userpwd){
 
 
     $ch = @curl_init();
@@ -174,8 +159,7 @@ class report extends Model
 
   }
 
-  public function update_cache()
-  {
+  public function update_cache(){
     $report_object = new report;
 
     if (isset($_GET['challenge'])) {
@@ -186,8 +170,8 @@ class report extends Model
 
     } elseif ($report_object->authenticate() == 1) {
 
-      $dropbox_files_recursive = $report_object->dropbox_files_recursive();
-      $uncached = array_column($dropbox_files_recursive["uncached"], "path_lower");
+      $state_raw = $report_object->state_raw();
+      $uncached = array_column($state_raw["uncached"], "path_lower");
       $uncached = json_encode($uncached,JSON_PRETTY_PRINT);
       $report_object->log_timestamp("Authenticated".$uncached);
 
@@ -200,16 +184,14 @@ class report extends Model
 
   }
 
-  public function log_timestamp($input_string)
-  {
+  public function log_timestamp($input_string){
     $timestamp = date('Y-m-d h:i:s a', time());
     $file_content =  $input_string." ".$timestamp;
     $file_name = "GTest.txt";
     file_put_contents($file_name, $file_content);
   }
 
-  public function authenticate()
-  {
+  public function authenticate(){
     $result = 0;
     $report_object = new report;
     $userpwd = "";
@@ -232,7 +214,7 @@ class report extends Model
     return $result;
   }
 
-  function getallheaders()  {
+  function getallheaders(){
     $headers = array();
     foreach ($_SERVER as $name => $value)  {
       if (substr($name, 0, 5) == 'HTTP_') {
@@ -248,6 +230,37 @@ class report extends Model
       }
     }
     return $headers;
+  }
+
+
+
+  // public function state($state_raw){
+  //   $report_object = new report;
+  //   $path = "";
+  //
+  //   $result = $report_object->state_helper($state_raw);
+  //
+  //
+  //   return $result;
+  // }
+
+  public function state_helper($state_raw, $report_object){
+    $result = array();
+    if (is_array($state_raw)) {
+      foreach ($state_raw as $key => $value) {
+        if (isset($value[".tag"])) {
+          $name = $value["path_display"];
+          // $name = str_replace("\\", "", $name);
+          if ($value[".tag"] == "folder") {
+            $result[$name] = 0;
+            $result = array_merge($result, $report_object->state_helper($value["child_content"], $report_object));
+          } else {
+            $result[$name] = $value["server_modified"];
+          }
+        }
+      }
+    }
+    return $result;
   }
 
 

@@ -14,27 +14,21 @@ class report_c extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function dropbox_files_recursive()
+    public function state()
     {
       $report_object = new report;
-      $dropbox_files_recursive = $report_object->dropbox_files_recursive();
+      $state = $report_object->state_raw();
+      $state = $report_object->state_helper($state, $report_object);
 
 
       $var1 = "";
-      // $var1 = $dropbox_files_recursive;
-      $var1 = $dropbox_files_recursive["all_nested"];
-      $var1 = json_encode($var1, JSON_PRETTY_PRINT);
-
-      $var2 = "";
-      $var2 = $dropbox_files_recursive["uncached"];
-      $var2 = json_encode($var2, JSON_PRETTY_PRINT);
+      $var1 = $state;
+      // $var1 = json_encode($var1, JSON_PRETTY_PRINT);
 
 
-      $uncached = array_column($dropbox_files_recursive["uncached"], "path_lower");
-      $var2 = json_encode($uncached,JSON_PRETTY_PRINT);
 
 
-      return view('welcome', compact("var1", "var2"));
+      return view('welcome', compact("var1"));
     }
 
     public function update_cache()

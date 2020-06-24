@@ -6,8 +6,7 @@
   </head>
   <body>
     <pre>
-      <?php echo $var1 ?>
-      <br><?php echo $var2 ?>
+      <br><?php echo json_encode($var1, JSON_PRETTY_PRINT); ?>
     </pre>
   </body>
 </html>

@@ -163,10 +163,10 @@ https://www.youtube.com/watch?v=TdGPQPcGfx0
 google: best dropbox api v2 php library
 https://www.dropboxforum.com/t5/Dropbox-API-Support-Feedback/API-v2-with-PHP/td-p/266674
 https://www.dropboxforum.com/t5/English/ct-p/English
----
+---useful start
 https://www.dropboxforum.com/t5/Dropbox-API-Support-Feedback/Dropbox-API-V2-Sync/td-p/419421
 https://stackoverflow.com/questions/61755432/dropbox-server-integration-php-library
-----
+---useful end
 google: webapp sync dropbox files to server
 https://www.dropboxforum.com/t5/Discuss-Dropbox-Developer-API/From-webapp-write-file-to-local-and-then-sync-back-on-close/td-p/338598
 https://www.quora.com/Can-I-transfer-files-from-my-Dropbox-to-FTP-through-a-web-app
@@ -194,6 +194,7 @@ google: dropbox isn't sending webhooks
 https://www.dropboxforum.com/t5/Dropbox-API-Support-Feedback/webhook-not-work/td-p/254264
 ---useful start
 https://www.dropboxforum.com/t5/Dropbox-API-Support-Feedback/dropbox-isn-t-sending-webhooks/td-p/419730
+https://www.dropboxforum.com/t5/Dropbox-API-Support-Feedback/is-the-files-list-folder-endpoint-only-available-with-token-not/m-p/420742#M22602
 ---useful end
 https://www.dropboxforum.com/t5/Dropbox-API-Support-Feedback/Webhook-Notifications-Not-Being-Recieved/td-p/233804
 https://www.dropboxforum.com/t5/Dropbox-API-Support-Feedback/Not-receiving-notifications-on-webhook/td-p/290637
@@ -208,29 +209,3 @@ https://www.youtube.com/watch?v=nGXo061pibU&t=890s
 https://stackoverflow.com/questions/11549742/php-checking-if-timestamp-is-less-than-30-minutes-old
 google: files/list_folder with key and secret
 https://stackoverflow.com/questions/41280591/http-request-for-auth-in-dropbox-using-qt5
-
-Error: Received unexpected status code 500.
-
-Request:
-POST https://bluegemify.co.za/update_cache
-
-Response:
-HTTP/1.1 500 Internal Server Error
-Upgrade: h2,h2c
-Transfer-Encoding: chunked
-Set-Cookie: XSRF-TOKEN=eyJpdiI6InBac0c0eHB3bzRSS0dFcDZjUDJjNkE9PSIsInZhbHVlIjoidUM4VUYzaU1zZDNsY2lVTHlwN0IrM09jQVpoT2QvakZqWjBJekd5alpUK1lhMlpHaFQ4bUs2NjdrQzE3OHFuSCIsIm1hYyI6IjdjOWJjYjRjNDBjOGY1MzU2ZDM0NDY2ZDljNWQyMmY0M2I5ZGIwYWJmNGIxYTI0ZmY0NzNlYmFhMjJhYzIyZTYifQ%3D%3D; expires=Wed, 13-May-2020 21:23:06 GMT; Max-Age=7200; path=/; samesite=lax
-Set-Cookie: laravel_session=eyJpdiI6IjRzR29HcW5jT3YyMTZSWTl5QllhZUE9PSIsInZhbHVlIjoiMFlWMTZVbmpaNHc2V3R6SFBhNUVTTVk1VW4vTHkvVmozV2xCVlRHQUNxRGRvUW0reHhsc2xJRW8vaDl1MllJZCIsIm1hYyI6IjQ2NGQ4Njc2NWI0NzhkM2IyMjMyNWUxN2NmMWRhZDA5NzA4NjBlZTUzYmZlZjkyYTdkYzNmYTBhZWI0NTMyMWIifQ%3D%3D; expires=Wed, 13-May-2020 21:23:06 GMT; Max-Age=7200; path=/; httponly; samesite=lax
-X-Http-Reason: Internal Server Error
-Server: Apache
-Connection: Upgrade, close
-Cache-Control: no-cache, private
-Date: Wed, 13 May 2020 19:23:06 GMT
-Content-Type: text/html; charset=UTF-8
-
-Response Body (First 256 bytes):
-<!doctype html>
-<html class="theme-light">
-<!--
-ErrorException: Undefined variable: dropbox_files_recursive in file /usr/home/bluegpyuty/FlexFile-3/app/report.php on line 188
-
-#0 /usr/home/bluegpyuty/FlexFile-3/app/report.php(188): Illuminate\Foundation\Bo

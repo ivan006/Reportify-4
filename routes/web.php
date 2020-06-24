@@ -17,5 +17,5 @@ use Illuminate\Support\Facades\Route;
 //     return view('welcome');
 // });
 
-Route::get('/dropbox', "report_c@dropbox_files_recursive");
+Route::get('/dropbox', "report_c@state");
 Route::any('/update_cache', "report_c@update_cache");
