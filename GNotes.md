@@ -170,7 +170,9 @@ https://stackoverflow.com/questions/61755432/dropbox-server-integration-php-libr
 google: webapp sync dropbox files to server
 https://www.dropboxforum.com/t5/Discuss-Dropbox-Developer-API/From-webapp-write-file-to-local-and-then-sync-back-on-close/td-p/338598
 https://www.quora.com/Can-I-transfer-files-from-my-Dropbox-to-FTP-through-a-web-app
+
 google: Goal: Dropbox API v2 Sync Tool I want to make a webapp sync tool that does the following: 1. Syncs files between web apps server and dropbox app folder when user clicks a button  2. Is Laravel or PHP based   Obstacles: Deprecated API Sync Endpoints The following resources give me the impression that the deprecated API sync endpoints situation is a problem: 1. Thread about no solution for sync - https://www.dropboxforum.com/t5/Dropbox-API-Support-Feedback/how-to-sync-my-app-folder-in-dropbox/td-p/194233 2. Article about no official libraries for sync - https://blog.couchbase.com/dropbox-drops-sync/ 3. Youtube search results showing no good tutorials for "dropbox api v2 sync"  Solution: Endpoints? Libraries? Tutorials? I'm still new to dropbox API but I have played around with it a bit. Are there any special endpoints, tutorials or libraries that could help me?
+
 google: php/js based web app that syncs files between its server and it's dropbox app folder Any recommended libraries/tutorials/endpoints to do this?
 google: "dropbox" "api" I need a php/js based webapp that syncs files between it's server and it's dropbox app folder
 https://www.dropbox.com/developers/reference/webhooks
@@ -209,3 +211,26 @@ https://www.youtube.com/watch?v=nGXo061pibU&t=890s
 https://stackoverflow.com/questions/11549742/php-checking-if-timestamp-is-less-than-30-minutes-old
 google: files/list_folder with key and secret
 https://stackoverflow.com/questions/41280591/http-request-for-auth-in-dropbox-using-qt5
+
+google: json decode returns null
+https://stackoverflow.com/questions/2410342/php-json-decode-returns-null-with-valid-json
+https://stackoverflow.com/questions/689185/json-decode-returns-null-after-webservice-call
+
+https://www.youtube.com/watch?v=DOeRYX_SL3I&list=PL1aMeb5UP_PERw3WHno57aSB1a4abe8sa
+https://www.youtube.com/watch?v=nGXo061pibU&t=890s
+https://www.youtube.com/watch?v=mMBx9vDp5sk
+https://www.youtube.com/watch?v=txwjqF2ON3M
+https://www.youtube.com/watch?v=MEhibvy31oI
+https://www.youtube.com/watch?v=XZmMqVbQfVw
+https://www.youtube.com/watch?v=TdGPQPcGfx0
+https://www.youtube.com/watch?v=AzCQrjWQJs4
+
+google: php dropbox respond to webhook timeoyut
+google: php dropbox respond to webhook timeout
+https://gist.github.com/Foxy79/cc4aceb1a71e9cc60f87
+google: dropbox webhook timeout multithread
+gooogle: Error: Did not receive response from server.  Request: POST   Response: HTTP/1.1 N/A Unknown Upgrade: h2,h2c Transfer-Encoding: chunked Set-Cookie: XSRF-TOKEN=; expires= GMT; Max-Age=7200; path=/; samesite=lax Set-Cookie: laravel_session=; expires=Thu, 25-Jun-2020 21:19:19 GMT; Max-Age=7200; path=/; httponly; samesite=lax X-Http-Reason: Internal Server Error Server: Apache Connection: Upgrade, close Cache-Control: no-cache, private Date: Thu, 25 Jun 2020 19:19:19 GMT Content-Type: text/html; charset=UTF-8  Response Body (First 256 bytes): (No response body)
+https://stackoverflow.com/questions/34671999/integration-test-with-rest-assured-and-basic-auth-with-csrf
+https://www.youtube.com/watch?v=nGXo061pibU&t=890s
+google: Error: Did not receive response from server.  Request: POST   Response: HTTP/1.1 N/A Unknown Upgrade: h2,h2c Transfer-Encoding: chunked X-Http-Reason: Internal Server Error Server: Apache Connection: Upgrade, close Cache-Control: no-cache, private Date: Thu, 25 Jun 2020 19:19:19 GMT Content-Type: text/html; charset=UTF-8  Response Body (First 256 bytes): (No response body)
+https://github.com/aio-libs/aiohttp/issues/2277

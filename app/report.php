@@ -9,7 +9,7 @@ class report extends Model
 
   public function apikey(){
     $result = array(
-      "dropbox_token" => "xjqKpNY_c1AAAAAAAAAHWibFEy2yVrNVjkY4QhcBBfhX08p5Y6EnBL51VAFwuTM3",
+      "dropbox_token" => "xjqKpNY_c1AAAAAAAAAHc9_FxgS00JEzQUCdRbneVp33frzE7yNrLEgEQSasewwf",
       "dropbox_userpwd" => array(
         "username" => "z3o9nmtmd0ikqf4",
         "password" => "ntibchtud5z4lmr",
@@ -170,9 +170,10 @@ class report extends Model
 
     } elseif ($report_object->authenticate() == 1) {
 
-      $state_raw = $report_object->state_raw();
-      $uncached = array_column($state_raw["uncached"], "path_lower");
-      $uncached = json_encode($uncached,JSON_PRETTY_PRINT);
+      $uncached = "123";
+      // $state_raw = $report_object->state_raw();
+      // $uncached = array_column($state_raw["uncached"], "path_lower");
+      // $uncached = json_encode($uncached,JSON_PRETTY_PRINT);
       $report_object->log_timestamp("Authenticated".$uncached);
 
     } else {
@@ -234,21 +235,20 @@ class report extends Model
 
 
 
-  // public function state($state_raw){
-  //   $report_object = new report;
-  //   $path = "";
-  //
-  //   $result = $report_object->state_helper($state_raw);
-  //
-  //
-  //   return $result;
-  // }
+  public function state(){
+    $report_object = new report;
+
+    $state_raw = $report_object->state_raw();
+    $result = $report_object->state_helper($state_raw, $report_object);
+
+    return $result;
+  }
 
   public function state_helper($state_raw, $report_object){
     $result = array();
     if (is_array($state_raw)) {
       foreach ($state_raw as $key => $value) {
-        if (isset($value[".tag"])) {
+        if (isset($value[".tag"]) and isset($value['path_display'])) {
           $name = $value["path_display"];
           // $name = str_replace("\\", "", $name);
           if ($value[".tag"] == "folder") {
@@ -262,6 +262,24 @@ class report extends Model
     }
     return $result;
   }
+
+  public function state_diff($report_object){
+
+    $file_content = "GCache.txt";
+    $file_content = file_get_contents($file_content);
+    $old_state = utf8_encode($file_content);
+    $old_state = json_decode($old_state, true);
+
+    $state = $report_object->state_raw();
+    $state = $report_object->state_helper($state, $report_object);
+
+    $result["remove"] = array_diff_assoc($old_state, $state);
+    $result["add"] = array_diff_assoc($state, $old_state);
+
+    return $result;
+  }
+
+
 
 
 
