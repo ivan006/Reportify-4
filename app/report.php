@@ -9,7 +9,7 @@ class report extends Model
 
   public function apikey(){
     $result = array(
-      "dropbox_token" => "xjqKpNY_c1AAAAAAAAAHc9_FxgS00JEzQUCdRbneVp33frzE7yNrLEgEQSasewwf",
+      "dropbox_token" => "xjqKpNY_c1AAAAAAAAAHdnuXdEYqJeL4V4S0fJeGdW767FI_PFa_tIhia-QF67LG",
       "dropbox_userpwd" => array(
         "username" => "z3o9nmtmd0ikqf4",
         "password" => "ntibchtud5z4lmr",
@@ -174,7 +174,10 @@ class report extends Model
       // $state_raw = $report_object->state_raw();
       // $uncached = array_column($state_raw["uncached"], "path_lower");
       // $uncached = json_encode($uncached,JSON_PRETTY_PRINT);
-      $report_object->log_timestamp("Authenticated".$uncached);
+
+      $message = 123;
+      // $message = $report_object->state($report_object);
+      $report_object->log_timestamp("Authenticated ".$message);
 
     } else {
       header('HTTP/1.0 403 Forbidden');
@@ -235,8 +238,7 @@ class report extends Model
 
 
 
-  public function state(){
-    $report_object = new report;
+  public function state($report_object){
 
     $state_raw = $report_object->state_raw();
     $result = $report_object->state_helper($state_raw, $report_object);

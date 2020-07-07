@@ -234,3 +234,23 @@ https://stackoverflow.com/questions/34671999/integration-test-with-rest-assured-
 https://www.youtube.com/watch?v=nGXo061pibU&t=890s
 google: Error: Did not receive response from server.  Request: POST   Response: HTTP/1.1 N/A Unknown Upgrade: h2,h2c Transfer-Encoding: chunked X-Http-Reason: Internal Server Error Server: Apache Connection: Upgrade, close Cache-Control: no-cache, private Date: Thu, 25 Jun 2020 19:19:19 GMT Content-Type: text/html; charset=UTF-8  Response Body (First 256 bytes): (No response body)
 https://github.com/aio-libs/aiohttp/issues/2277
+google:  Error: Did not receive response from server.
+
+Request:
+POST
+
+Response:
+HTTP/1.1 N/A Unknown
+Upgrade: h2,h2c
+Transfer-Encoding: chunked
+X-Http-Reason: Internal Server Error
+Server: Apache
+Connection: Upgrade, close
+Cache-Control: no-cache, private
+Date: Thu, 25 Jun 2020 19:19:19 GMT
+Content-Type: text/html; charset=UTF-8
+
+Response Body (First 256 bytes):
+(No response body)
+
+https://www.dropboxforum.com/t5/Discuss-Dropbox-Developer-API/dropbox-webhook-timeout-multithread/td-p/432835

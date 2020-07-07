@@ -26,7 +26,7 @@ class report_c extends Controller
       $var1 = $state;
       // $var1 = json_encode($var1, JSON_PRETTY_PRINT);
 
-      $state2 = $report_object->state($state2, $report_object);
+      $state2 = $report_object->state($report_object);
 
 
 
