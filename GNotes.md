@@ -261,3 +261,4 @@ https://stackoverflow.com/questions/70855/how-can-one-use-multi-threading-in-php
 https://medium.com/@rossbulat/true-php7-multi-threading-how-to-rebuild-php-and-use-pthreads-bed4243c0561
 google: php threading curl
 https://stackoverflow.com/questions/12394027/curl-multi-threading-with-php
+google: php threading youtube
