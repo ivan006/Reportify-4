@@ -9,7 +9,7 @@ class report extends Model
 
   public function apikey(){
     $result = array(
-      "dropbox_token" => "xjqKpNY_c1AAAAAAAAAHdnuXdEYqJeL4V4S0fJeGdW767FI_PFa_tIhia-QF67LG",
+      "dropbox_token" => env('DROPBOX_TOKEN'),
       "dropbox_userpwd" => array(
         "username" => "z3o9nmtmd0ikqf4",
         "password" => "ntibchtud5z4lmr",
