@@ -254,3 +254,10 @@ Response Body (First 256 bytes):
 (No response body)
 
 https://www.dropboxforum.com/t5/Discuss-Dropbox-Developer-API/dropbox-webhook-timeout-multithread/td-p/432835
+https://stackoverflow.com/questions/2790899/how-to-check-if-a-string-starts-with-a-specified-string
+google: multithreading for dropbox api
+google: php threading
+https://stackoverflow.com/questions/70855/how-can-one-use-multi-threading-in-php-applications
+https://medium.com/@rossbulat/true-php7-multi-threading-how-to-rebuild-php-and-use-pthreads-bed4243c0561
+google: php threading curl
+https://stackoverflow.com/questions/12394027/curl-multi-threading-with-php

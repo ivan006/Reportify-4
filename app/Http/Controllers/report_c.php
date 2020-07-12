@@ -19,19 +19,16 @@ class report_c extends Controller
       $report_object = new report;
       // $state = $report_object->state_raw();
       // dd($state);
-      $state = $report_object->state_diff($report_object);
 
 
-      $var1 = "";
-      $var1 = $state;
+      $diff_level_1 = $report_object->diff_level_1($report_object);
+      $diff_level_2 = $report_object->diff_level_2($report_object);
+
       // $var1 = json_encode($var1, JSON_PRETTY_PRINT);
 
       $state2 = $report_object->state($report_object);
 
-
-
-
-      return view('welcome', compact("var1", "state2"));
+      return view('welcome', compact("diff_level_2", "diff_level_1"));
     }
 
     public function update_cache()

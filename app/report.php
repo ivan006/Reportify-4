@@ -265,9 +265,9 @@ class report extends Model
     return $result;
   }
 
-  public function state_diff($report_object){
+  public function diff_level_1($report_object){
 
-    $file_content = "GCache.txt";
+    $file_content = "GState.txt";
     $file_content = file_get_contents($file_content);
     $old_state = utf8_encode($file_content);
     $old_state = json_decode($old_state, true);
@@ -277,6 +277,41 @@ class report extends Model
 
     $result["remove"] = array_diff_assoc($old_state, $state);
     $result["add"] = array_diff_assoc($state, $old_state);
+
+    return $result;
+  }
+
+  public function diff_level_2($report_object){
+
+    $diff_level_1 = $report_object->diff_level_1($report_object);
+
+    $result["remove"] = $report_object->diff_level_2_helper("remove",$diff_level_1);
+    $result["add"] = $report_object->diff_level_2_helper("add",$diff_level_1);
+
+    // $result["remove"] = array_diff_assoc($old_state, $state);
+    // $result["add"] = array_diff_assoc($state, $old_state);
+
+    return $result;
+  }
+
+  public function diff_level_2_helper($array_name,$diff_level_1){
+
+    $folder_to_remove = array();
+    foreach ($diff_level_1[$array_name] as $key => $value) {
+      if ($value == 0) {
+        $folder_to_remove[$key] = $value;
+      }
+    }
+    $result = $folder_to_remove;
+    foreach ($diff_level_1[$array_name] as $key => $value) {
+      if ($value !== 0) {
+        foreach ($folder_to_remove as $key2 => $value2) {
+          if (substr($key, 0, strlen($key2)) !== $key2) {
+            $result[$key] = $value;
+          }
+        }
+      }
+    }
 
     return $result;
   }
