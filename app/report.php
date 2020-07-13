@@ -20,25 +20,24 @@ class report extends Model
 
   public function update_updates_pending_log(){
     $report_object = new report;
+    $file_name = "updates_pending_log.txt";
 
     if (isset($_GET['challenge'])) {
       $result = $_GET['challenge'];
 
       $timestamp = date('Y-m-d h:i:s a', time());
-      $report_object->update_updates_pending_log_helper("ready"." ".$timestamp);
+      file_put_contents(
+        $file_name,
+        "ready"." ".$timestamp
+      );
 
       return $result;
     } elseif ($report_object->authenticate() == 1) {
-      $report_object->update_updates_pending_log_helper("yes");
+      file_put_contents($file_name, "yes");
     } else {
       header('HTTP/1.0 403 Forbidden');
-      $report_object->update_updates_pending_log_helper("not_ready");
+      file_put_contents($file_name, "not_ready");
     }
-  }
-
-  public function update_updates_pending_log_helper($message){
-    $file_name = "updates_pending_log.txt";
-    file_put_contents($file_name, $message);
   }
 
   public function authenticate(){
@@ -80,6 +79,28 @@ class report extends Model
       }
     }
     return $headers;
+  }
+
+  public function file_get_utf8($path){
+    $result = file_get_contents($path);
+    $result = utf8_encode($result);
+    return $result;
+  }
+
+
+  public function update_updates_processing_log(){
+    $report_object = new report;
+
+    $updates_processing_log = $report_object->file_get_utf8("updates_pending_log.txt");
+    // $updates_processing_log = json_decode($updates_processing_log, true);
+
+    $timestamp = date('Y-m-d h:i:s a', time());
+    file_put_contents(
+      "updates_processing_log.txt",
+      $updates_processing_log." ".$timestamp
+    );
+
+
   }
 
   public function state_raw(){
@@ -254,10 +275,9 @@ class report extends Model
 
   public function diff_level_1($report_object){
 
-    $file_content = "updates_completed_log.txt";
-    $file_content = file_get_contents($file_content);
-    $old_state = utf8_encode($file_content);
+    $old_state = $report_object->file_get_utf8("updates_completed_log.txt");
     $old_state = json_decode($old_state, true);
+
 
     $state = $report_object->state_raw();
     $state = $report_object->state_helper($state, $report_object);
