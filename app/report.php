@@ -323,8 +323,4 @@ class report extends Model
     return $result;
   }
 
-
-
-
-
 }

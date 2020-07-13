@@ -269,3 +269,4 @@ https://medium.com/@tik/how-to-create-and-monitor-scheduled-tasks-in-laravel-app
 // useful start
 https://tutsforweb.com/how-to-set-up-task-scheduling-cron-job-in-laravel/
 // useful end
+https://laravel.com/docs/7.x/scheduling
