@@ -265,7 +265,6 @@ google: php threading youtube
 https://stackoverflow.com/questions/535020/tracking-the-script-execution-time-in-php
 https://www.php.net/manual/en/function.getrusage.php
 https://www.w3schools.com/php/php_date.asp
-https://medium.com/@tik/how-to-create-and-monitor-scheduled-tasks-in-laravel-applications-784d4f7f8084
 // useful start
-https://tutsforweb.com/how-to-set-up-task-scheduling-cron-job-in-laravel/
+https://medium.com/@tik/how-to-create-and-monitor-scheduled-tasks-in-laravel-applications-784d4f7f8084
 // useful end
