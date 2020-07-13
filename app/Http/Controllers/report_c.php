@@ -31,11 +31,11 @@ class report_c extends Controller
       return view('welcome', compact("diff_level_2", "diff_level_1"));
     }
 
-    public function update_cache()
+    public function update_updates_pending_log()
     {
       $report_object = new report;
       $var1 = 1;
-      $var2 = $report_object->update_cache();
+      $var2 = $report_object->update_updates_pending_log();
       // $var2 = json_encode($var2, JSON_PRETTY_PRINT);
       return $var2;
     }

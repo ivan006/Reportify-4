@@ -14,5 +14,5 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/dropbox', "report_c@state");
-Route::any('/update_cache', "report_c@update_cache");
-// https://red.bluegemify.co.za/update_cache?challenge=123
+Route::any('/update_cache', "report_c@update_updates_pending_log");
+// https://red.bluegemify.co.za/update_updates_pending_log?test=123

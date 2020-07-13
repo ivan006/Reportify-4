@@ -262,3 +262,9 @@ https://medium.com/@rossbulat/true-php7-multi-threading-how-to-rebuild-php-and-u
 google: php threading curl
 https://stackoverflow.com/questions/12394027/curl-multi-threading-with-php
 google: php threading youtube
+https://stackoverflow.com/questions/535020/tracking-the-script-execution-time-in-php
+https://www.php.net/manual/en/function.getrusage.php
+https://www.w3schools.com/php/php_date.asp
+// useful start
+https://medium.com/@tik/how-to-create-and-monitor-scheduled-tasks-in-laravel-applications-784d4f7f8084
+// useful end

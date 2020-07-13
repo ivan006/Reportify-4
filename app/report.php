@@ -18,6 +18,70 @@ class report extends Model
     return $result;
   }
 
+  public function update_updates_pending_log(){
+    $report_object = new report;
+
+    if (isset($_GET['challenge'])) {
+      $result = $_GET['challenge'];
+
+      $timestamp = date('Y-m-d h:i:s a', time());
+      $report_object->update_updates_pending_log_helper("ready"." ".$timestamp);
+
+      return $result;
+    } elseif ($report_object->authenticate() == 1) {
+      $report_object->update_updates_pending_log_helper("yes");
+    } else {
+      header('HTTP/1.0 403 Forbidden');
+      $report_object->update_updates_pending_log_helper("not_ready");
+    }
+  }
+
+  public function update_updates_pending_log_helper($message){
+    $file_name = "updates_pending_log.txt";
+    file_put_contents($file_name, $message);
+  }
+
+  public function authenticate(){
+    $result = 0;
+    $report_object = new report;
+    $userpwd = "";
+    $userpwd = $report_object->apikey()["dropbox_userpwd"];
+    // $token = "";
+    // $token = env('DROPBOX_TOKEN');
+
+    $raw_data = file_get_contents('php://input');
+    if ($raw_data) {
+      $json = json_decode($raw_data);
+      if (is_object($json)) {
+        if (isset($json->list_folder)) {
+          $headers = $report_object->getallheaders();
+          if (hash_hmac("sha256", $raw_data, $userpwd['password']) == $headers['X-Dropbox-Signature']) {
+            $result = 1;
+          }
+        }
+      }
+    }
+    return $result;
+  }
+
+  function getallheaders(){
+    $headers = array();
+    foreach ($_SERVER as $name => $value)  {
+      if (substr($name, 0, 5) == 'HTTP_') {
+
+        $name = substr($name, 5);
+        $name = str_replace('_', ' ', $name);
+        $name = strtolower($name);
+        $name = ucwords($name);
+        $name = str_replace(' ', '-', $name);
+
+        $headers[$name] = $value;
+
+      }
+    }
+    return $headers;
+  }
+
   public function state_raw(){
     $report_object = new report;
     $path = "";
@@ -68,7 +132,7 @@ class report extends Model
   public function get_from_dropbox($path, $report_object, $url_suffix){
     $report_object = new report;
     $body = array(
-      "path" => $path,
+    "path" => $path,
     );
     $body = json_encode($body);
 
@@ -78,7 +142,7 @@ class report extends Model
     // $userpwd = $report_object->apikey()["dropbox_userpwd"];
 
     $token = "";
-    $token = $report_object->apikey()["dropbox_token"];
+    $token = env('DROPBOX_TOKEN');
 
     $endpoint = 'https://api.dropboxapi.com/2/'.$url_suffix;
 
@@ -95,13 +159,13 @@ class report extends Model
 
     // set URL and other appropriate options
     $options = array(
-      CURLOPT_URL => $endpoint,
-      CURLOPT_RETURNTRANSFER => 1,
-      CURLOPT_POST => 1,
-      CURLOPT_POSTFIELDS => $body,
-      CURLOPT_HTTPHEADER => array(
-        'Content-Type: application/json',
-      ),
+    CURLOPT_URL => $endpoint,
+    CURLOPT_RETURNTRANSFER => 1,
+    CURLOPT_POST => 1,
+    CURLOPT_POSTFIELDS => $body,
+    CURLOPT_HTTPHEADER => array(
+    'Content-Type: application/json',
+    ),
     );
     if (!empty($userpwd)) {
       $options[CURLOPT_USERPWD] = $userpwd['username'] . ":" . $userpwd['password'];
@@ -140,8 +204,8 @@ class report extends Model
 
     @curl_setopt($ch, CURLOPT_URL, $endpoint);
     @curl_setopt($ch, CURLOPT_HTTPHEADER, array(
-      'Accept: application/json',
-      'Content-Type: application/json'
+    'Accept: application/json',
+    'Content-Type: application/json'
     ));
     @curl_setopt($ch, CURLOPT_HEADER, 0);
     @curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
@@ -157,83 +221,6 @@ class report extends Model
     return $response;
 
 
-  }
-
-  public function update_cache(){
-    $report_object = new report;
-
-    if (isset($_GET['challenge'])) {
-      $result = $_GET['challenge'];
-      // echo 123;
-      $report_object->log_timestamp("Challange");
-      return $result;
-
-    } elseif ($report_object->authenticate() == 1) {
-
-      $uncached = "123";
-      // $state_raw = $report_object->state_raw();
-      // $uncached = array_column($state_raw["uncached"], "path_lower");
-      // $uncached = json_encode($uncached,JSON_PRETTY_PRINT);
-
-      $message = 123;
-      // $message = $report_object->state($report_object);
-      $report_object->log_timestamp("Authenticated ".$message);
-
-    } else {
-      header('HTTP/1.0 403 Forbidden');
-      $report_object->log_timestamp("Not authenticated");
-    }
-
-
-
-  }
-
-  public function log_timestamp($input_string){
-    $timestamp = date('Y-m-d h:i:s a', time());
-    $file_content =  $input_string." ".$timestamp;
-    $file_name = "GTest.txt";
-    file_put_contents($file_name, $file_content);
-  }
-
-  public function authenticate(){
-    $result = 0;
-    $report_object = new report;
-    $userpwd = "";
-    $userpwd = $report_object->apikey()["dropbox_userpwd"];
-    // $token = "";
-    // $token = $report_object->apikey()["dropbox_token"];
-
-    $raw_data = file_get_contents('php://input');
-    if ($raw_data) {
-      $json = json_decode($raw_data);
-      if (is_object($json)) {
-        if (isset($json->list_folder)) {
-          $headers = $report_object->getallheaders();
-          if (hash_hmac("sha256", $raw_data, $userpwd['password']) == $headers['X-Dropbox-Signature']) {
-            $result = 1;
-          }
-        }
-      }
-    }
-    return $result;
-  }
-
-  function getallheaders(){
-    $headers = array();
-    foreach ($_SERVER as $name => $value)  {
-      if (substr($name, 0, 5) == 'HTTP_') {
-
-        $name = substr($name, 5);
-        $name = str_replace('_', ' ', $name);
-        $name = strtolower($name);
-        $name = ucwords($name);
-        $name = str_replace(' ', '-', $name);
-
-        $headers[$name] = $value;
-
-      }
-    }
-    return $headers;
   }
 
 
@@ -267,7 +254,7 @@ class report extends Model
 
   public function diff_level_1($report_object){
 
-    $file_content = "GState.txt";
+    $file_content = "updates_completed_log.txt";
     $file_content = file_get_contents($file_content);
     $old_state = utf8_encode($file_content);
     $old_state = json_decode($old_state, true);
